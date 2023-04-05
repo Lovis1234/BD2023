@@ -1,17 +1,17 @@
-package nl.belastingdienst.H7Bank;
+package nl.belastingdienst.H11.H11Bank;
 
-public class BankAccount {
+public abstract class BankAccount {
     private int accountNumber;
-    private double balance;
-    private static final double INTEREST = 2.5;
+    private double balance = 0;
+    private double intrest;
 
-    public BankAccount(int accountNumber, double balance) {
+    public BankAccount(int accountNumber, double intrest) {
         this.accountNumber = accountNumber;
-        this.balance = balance;
+        this.intrest = intrest;
     }
 
     public double calculateInterest() {
-        return balance * (1 + INTEREST / 100) - balance;
+        return balance * (1 + intrest / 100) - balance;
     }
 
     public void transfer(BankAccount bankAccount, double amount) throws InsufficientFundsException {
