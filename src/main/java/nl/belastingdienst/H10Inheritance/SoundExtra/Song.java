@@ -22,6 +22,12 @@ public class Song {
         support.addPropertyChangeListener(this.effectSong);
     }
 
+    public void addEffectToSong(Effect effect) {
+        List<Effect> currentList = new ArrayList<>(effectList);
+        currentList.add(effect);
+        addEffectsToSong(currentList);
+    }
+
     public void addEffectsToSong(List<Effect> appliedEffectList) {
         support.firePropertyChange("effectListChanged", this.effectList, appliedEffectList);
         this.effectList = appliedEffectList;
