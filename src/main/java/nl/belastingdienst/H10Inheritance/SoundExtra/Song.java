@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Song {
     private String name;
-    private String artist;
     // TODO Check whether this is OKAY
 //    private String lyricsOriginal;
     private EffectSong effectSong = new EffectSong();
@@ -14,12 +13,17 @@ public class Song {
     private List<Effect> effectList = new ArrayList<>();
     private PropertyChangeSupport support;
 
-    public Song(String name, String artist, String lyricsOriginal) {
+    public Song(String name, String lyricsOriginal) {
         this.name = name;
-        this.artist = artist;
         this.effectSong.setLyricsOriginal(lyricsOriginal);
         support = new PropertyChangeSupport(this);
         support.addPropertyChangeListener(this.effectSong);
+    }
+
+    public void addEffectToSong(Effect effect) {
+        List<Effect> currentList = new ArrayList<>(effectList);
+        currentList.add(effect);
+        addEffectsToSong(currentList);
     }
 
     public void addEffectsToSong(List<Effect> appliedEffectList) {
@@ -31,12 +35,12 @@ public class Song {
         return name;
     }
 
-    public void playSong() {
+    public String playSong() {
         if (this.effectList.size() > 0) {
-            System.out.println(this.effectSong.getLyricsAfterEffect());
+            return (this.effectSong.getLyricsAfterEffect());
 
         } else {
-            System.out.println(this.effectSong.getLyricsOriginal());
+            return (this.effectSong.getLyricsOriginal());
         }
 
 

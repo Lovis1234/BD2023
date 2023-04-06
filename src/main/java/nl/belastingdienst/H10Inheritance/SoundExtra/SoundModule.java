@@ -1,5 +1,6 @@
 package nl.belastingdienst.H10Inheritance.SoundExtra;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,11 @@ public class SoundModule {
     List<Song> songList = new ArrayList<>();
 
     public SoundModule() {
+        JFrame frame = new JFrame("SoundEffects");
+        frame.setContentPane(new SoundEffects(this).getRootPane());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 400);
+        frame.setVisible(true);
     }
 
     public void addEffectToList(Effect effect) {
@@ -18,9 +24,15 @@ public class SoundModule {
         songList.add(song);
     }
 
-    public void addEffectsToSong(String name, Effect effect) {
+    public void addEffectsToSong(String name, List<Effect> effectList) {
         Song songFind = songList.stream().filter(song -> name.equals(song.getName())).findFirst().orElseThrow(IllegalArgumentException::new);
         songFind.addEffectsToSong(effectList);
+    }
+
+
+    public void addEffectToSong(String name, Effect effect) {
+        Song songFind = songList.stream().filter(song -> name.equals(song.getName())).findFirst().orElseThrow(IllegalArgumentException::new);
+        songFind.addEffectToSong(effect);
     }
 
 
@@ -33,10 +45,12 @@ public class SoundModule {
 
     }
 
-    public void playSong(String name) {
+    public String playSong(String name) {
         Song songFind = songList.stream().filter(song -> name.equals(song.getName())).findFirst().orElseThrow(IllegalArgumentException::new);
-        songFind.playSong();
+        return songFind.playSong();
     }
 
-
+    public void setEffectList(List<Effect> effectList) {
+        this.effectList = effectList;
+    }
 }

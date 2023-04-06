@@ -30,13 +30,16 @@ public class EffectSong implements PropertyChangeListener {
 
     public void setLyricsAfterEffect(List<Effect> effectListAfterChange) {
 
-        String lyricsAfterEffect = lyricsOriginal;
+        String lyricsAfterEffect2 = lyricsOriginal;
 
         for (Effect e : effectListAfterChange) {
-            lyricsAfterEffect = e.apply(lyricsAfterEffect);
+            lyricsAfterEffect2 = e.apply(lyricsAfterEffect2);
         }
 
-        this.lyricsAfterEffect = lyricsAfterEffect;
+        this.lyricsAfterEffect = lyricsAfterEffect2;
+
+        System.out.println("Liedje na toevoeging effect:");
+        System.out.println(this.lyricsAfterEffect);
     }
 
     public void setLyricsOriginal(String lyricsOriginal) {

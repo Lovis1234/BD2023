@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class SoundModuleTest {
 
     private SoundModule soundModule;
@@ -17,9 +20,9 @@ class SoundModuleTest {
     void addEffectToList() {
 
         //Create new effects
-        Distortion soundeffect1 = new Distortion();
+        Distortion soundeffect1 = Distortion.getInstance();
         this.soundModule.addEffectToList(soundeffect1);
-        Deformation soundeffect2 = new Deformation();
+        Deformation soundeffect2 = Deformation.getInstance();
         this.soundModule.addEffectToList(soundeffect2);
 
         int expectedAmountOfEffects = 2;
@@ -30,15 +33,8 @@ class SoundModuleTest {
 
     @Test
     void addEffectToSong() {
-    }
 
-    @Test
-    void newEffect() {
-    }
-
-    @Test
-    public void playSong() {
-        Song song = new Song("Vader Jacob", "Pieter", """
+        Song song = new Song("Vader Jacob", """
                 Vader Jacob, vader Jacob
                 Slaapt gij nog? Slaapt gij nog
                  Alle klokken luiden, alle klokken luiden
@@ -50,17 +46,55 @@ class SoundModuleTest {
                  Bim bam bom, bim bam bom
                  """);
         soundModule.addSongToList(song);
-        Distortion soundeffect1 = new Distortion();
+        Distortion soundeffect1 = Distortion.getInstance();
         this.soundModule.addEffectToList(soundeffect1);
-        Deformation soundeffect2 = new Deformation();
+        soundModule.addEffectToSong("Vader Jacob", soundeffect1);
+
+        Deformation soundeffect2 = Deformation.getInstance();
         this.soundModule.addEffectToList(soundeffect2);
-        soundModule.addEffectsToSong("Vader Jacob", soundeffect1);
+        soundModule.addEffectToSong("Vader Jacob", soundeffect2);
 
 
         Effect repeatTwice = s -> s.repeat(2);
 
         this.soundModule.addEffectToList(repeatTwice);
-//        soundModule.addEffectsToSong();
+        soundModule.addEffectToSong("Vader Jacob", repeatTwice);
+    }
+
+    @Test
+    void newEffect() {
+    }
+
+    @Test
+    public void playSong() {
+        Song song = new Song("Vader Jacob", """
+                Vader Jacob, vader Jacob
+                Slaapt gij nog? Slaapt gij nog
+                Alle klokken luiden, alle klokken luiden
+                Bim bam bom, bim bam bom
+
+                Vader Jacob, vader Jacob
+                Slaapt gij nog? Slaapt gij nog
+                Alle klokken luiden, alle klokken luiden
+                Bim bam bom, bim bam bom
+                """);
+        soundModule.addSongToList(song);
+        Distortion soundeffect1 = Distortion.getInstance();
+        this.soundModule.addEffectToList(soundeffect1);
+        Deformation soundeffect2 = Deformation.getInstance();
+        this.soundModule.addEffectToList(soundeffect2);
+
+        Effect repeatTwice = s -> s.repeat(2);
+
+        this.soundModule.addEffectToList(repeatTwice);
+
+        List<Effect> effectList = new ArrayList<>();
+        effectList.add(soundeffect1);
+        effectList.add(soundeffect2);
+        effectList.add(repeatTwice);
+
+
+        soundModule.addEffectsToSong("Vader Jacob", effectList);
 
 
         soundModule.playSong("Vader Jacob");
