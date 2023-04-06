@@ -9,15 +9,15 @@ public class EffectSong implements PropertyChangeListener {
     private String lyricsOriginal;
     private String lyricsAfterEffect;
 
+    private final SoundModule soundModule;
+
     public void propertyChange(PropertyChangeEvent evt) {
         this.setLyricsAfterEffect((List) evt.getNewValue());
     }
 
-    public EffectSong(String lyricsOriginal) {
+    public EffectSong(String lyricsOriginal, SoundModule soundModule) {
         this.lyricsOriginal = lyricsOriginal;
-    }
-
-    public EffectSong() {
+        this.soundModule = soundModule;
     }
 
     public String getLyricsAfterEffect() {
@@ -40,6 +40,7 @@ public class EffectSong implements PropertyChangeListener {
 
         System.out.println("Liedje na toevoeging effect:");
         System.out.println(this.lyricsAfterEffect);
+        this.soundModule.getGui().setTextpane(this.lyricsAfterEffect);
     }
 
     public void setLyricsOriginal(String lyricsOriginal) {

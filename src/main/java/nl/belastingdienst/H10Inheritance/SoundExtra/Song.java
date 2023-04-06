@@ -8,14 +8,15 @@ public class Song {
     private String name;
     // TODO Check whether this is OKAY
 //    private String lyricsOriginal;
-    private EffectSong effectSong = new EffectSong();
+    private EffectSong effectSong;
     //    private String lyricsAfterEffect;
     private List<Effect> effectList = new ArrayList<>();
     private PropertyChangeSupport support;
 
-    public Song(String name, String lyricsOriginal) {
+    public Song(String name, String lyricsOriginal, SoundModule soundModule) {
+        this.effectSong = new EffectSong(lyricsOriginal, soundModule);
         this.name = name;
-        this.effectSong.setLyricsOriginal(lyricsOriginal);
+//        this.effectSong.setLyricsOriginal(lyricsOriginal);
         support = new PropertyChangeSupport(this);
         support.addPropertyChangeListener(this.effectSong);
     }
@@ -23,6 +24,12 @@ public class Song {
     public void addEffectToSong(Effect effect) {
         List<Effect> currentList = new ArrayList<>(effectList);
         currentList.add(effect);
+        addEffectsToSong(currentList);
+    }
+
+    public void removeEffectFromSong(Effect effect) {
+        List<Effect> currentList = new ArrayList<>(effectList);
+        currentList.remove(effect);
         addEffectsToSong(currentList);
     }
 
