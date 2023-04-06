@@ -18,9 +18,15 @@ public class SoundModule {
         songList.add(song);
     }
 
-    public void addEffectsToSong(String name, Effect effect) {
+    public void addEffectsToSong(String name, List<Effect> effectList) {
         Song songFind = songList.stream().filter(song -> name.equals(song.getName())).findFirst().orElseThrow(IllegalArgumentException::new);
         songFind.addEffectsToSong(effectList);
+    }
+
+
+    public void addEffectToSong(String name, Effect effect) {
+        Song songFind = songList.stream().filter(song -> name.equals(song.getName())).findFirst().orElseThrow(IllegalArgumentException::new);
+        songFind.addEffectToSong(effect);
     }
 
 
