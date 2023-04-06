@@ -35,6 +35,11 @@ public class SoundModule {
         songFind.addEffectToSong(effect);
     }
 
+    public void removeEffectFromSong(String name, Effect effect) {
+        Song songFind = songList.stream().filter(song -> name.equals(song.getName())).findFirst().orElseThrow(IllegalArgumentException::new);
+        songFind.removeEffectFromSong(effect);
+    }
+
 
     public List<Effect> getEffectList() {
         return this.effectList;

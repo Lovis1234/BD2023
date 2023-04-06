@@ -26,6 +26,12 @@ public class Song {
         addEffectsToSong(currentList);
     }
 
+    public void removeEffectFromSong(Effect effect) {
+        List<Effect> currentList = new ArrayList<>(effectList);
+        currentList.remove(effect);
+        addEffectsToSong(currentList);
+    }
+
     public void addEffectsToSong(List<Effect> appliedEffectList) {
         support.firePropertyChange("effectListChanged", this.effectList, appliedEffectList);
         this.effectList = appliedEffectList;
