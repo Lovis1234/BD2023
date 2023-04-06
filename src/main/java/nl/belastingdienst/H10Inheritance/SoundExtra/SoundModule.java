@@ -8,9 +8,12 @@ public class SoundModule {
     List<Effect> effectList = new ArrayList<>();
     List<Song> songList = new ArrayList<>();
 
+    SoundEffects gui;
+
     public SoundModule() {
         JFrame frame = new JFrame("SoundEffects");
-        frame.setContentPane(new SoundEffects(this).getRootPane());
+        gui = new SoundEffects(this);
+        frame.setContentPane(gui.getRootPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 400);
         frame.setVisible(true);
@@ -57,5 +60,9 @@ public class SoundModule {
 
     public void setEffectList(List<Effect> effectList) {
         this.effectList = effectList;
+    }
+
+    public SoundEffects getGui() {
+        return gui;
     }
 }

@@ -14,7 +14,7 @@ public class Main {
         shop.createCard("Roan", 800, 15);
         shop.createCard("Vera", 500);
 
-//        shop.getCards();
+        shop.getCards();
 //        shop.StartPayment();
         shop.getCards();
 

@@ -3,7 +3,6 @@ package nl.belastingdienst.H10Inheritance.SoundExtra;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class SoundEffects implements ActionListener {
     private JPanel rootPane;
@@ -28,6 +27,8 @@ public class SoundEffects implements ActionListener {
         checkBoxDistortion.setVisible(false);
         buttonApply.setText("Choose song");
         this.soundModule = soundModule;
+        checkBoxDistortion.addActionListener(this);
+        checkBoxDeformation.addActionListener(this);
     }
 
     public JPanel getRootPane() {
@@ -35,12 +36,16 @@ public class SoundEffects implements ActionListener {
     }
 
 
+    public void setTextpane(String text) {
+        textPane1.setText(text);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonApply) {
             if (!intitialized) {
                 if (!textField1.getText().isEmpty() && !textPane1.getText().isEmpty()) {
-                    soundModule.addSongToList(new Song(textField1.getText(), textPane1.getText()));
+                    soundModule.addSongToList(new Song(textField1.getText(), textPane1.getText(), soundModule));
                     textPane1.setText(soundModule.playSong(textField1.getText()));
                     textField1.setEditable(false);
                     textPane1.setEditable(false);
@@ -48,27 +53,31 @@ public class SoundEffects implements ActionListener {
                     checkBoxDeformation.setVisible(true);
                     checkBoxDistortion.setVisible(true);
                     buttonApply.setText("Apply effect");
+                    buttonApply.setVisible(false);
                 } else textPane1.setText("Choose a song name and song lyrics");
             }
             if (intitialized) {
-                soundModule.setEffectList(new ArrayList<>());
-                if (checkBoxDistortion.isSelected()) {
-                    soundModule.addEffectToList(Distortion.getInstance());
 
-                }
-                if (checkBoxDeformation.isSelected()) {
-                    soundModule.addEffectToList(Deformation.getInstance());
-                }
-                soundModule.addEffectsToSong(textField1.getText(), soundModule.getEffectList());
-                textPane1.setText(soundModule.playSong(textField1.getText()));
+
+                System.out.println(soundModule.playSong(textField1.getText()));
+
             }
         }
-    }
+        if (e.getSource() == checkBoxDistortion) {
+            if (checkBoxDistortion.isSelected()) {
+                soundModule.addEffectToSong(textField1.getText(), Distortion.getInstance());
 
-    private void createUIComponents() {
-        jCheckBox = new JCheckBox("test");
-        jCheckBox.setVisible(true);
-        OptionPanel.add(jCheckBox);
-//        soundModule.getEffectList().forEach(a -> jCheckBox.add(new JCheckBoxMenuItem(a.toString())));
+            } else if (!checkBoxDistortion.isSelected()) {
+                soundModule.removeEffectFromSong(textField1.getText(), Distortion.getInstance());
+            }
+
+        }
+        if (e.getSource() == checkBoxDeformation) {
+            if (checkBoxDeformation.isSelected()) {
+                soundModule.addEffectToSong(textField1.getText(), Deformation.getInstance());
+            } else if (!checkBoxDeformation.isSelected()) {
+                soundModule.removeEffectFromSong(textField1.getText(), Deformation.getInstance());
+            }
+        }
     }
 }
