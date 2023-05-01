@@ -5,8 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
-public @interface MyAnnotation {
-    public String value() default "Hello";
+@Retention(RetentionPolicy.CLASS)
+@Target({ElementType.METHOD})
+public @interface MyAnnotation2 {
+    public String value() default "Hello2";
 }
